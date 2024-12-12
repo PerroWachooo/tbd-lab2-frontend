@@ -4,20 +4,22 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     "nuxt-security",
-    "@nuxtjs/google-fonts", // Agrega el módulo de Google Fonts aquí
+    "@nuxtjs/google-fonts", 
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
-        // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }));
       });
     },
   ],
-  css: ["~/assets/css/global.css"],
+  css: [
+    'leaflet/dist/leaflet.css',
+    "~/assets/css/global.css" 
+  ],
   googleFonts: {
     families: {
-      "Lexend Deca": [100, 400, 700, 900], // Especifica los pesos necesarios
+      "Lexend Deca": [100, 400, 700, 900], 
     },
-    display: "swap", // Define cómo se muestra la fuente mientras se carga
+    display: "swap", 
   },
   plugins: ["~/plugins/axios.client.ts", "~/plugins/toastification.js"],
   runtimeConfig: {
@@ -31,7 +33,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-10-23",
   build: {
-    transpile: ["vuetify"],
+    transpile: ["vuetify", "@vue-leaflet/vue-leaflet"] 
   },
   vite: {
     vue: {
@@ -39,5 +41,13 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+    resolve: {
+      alias: {
+        '@vue-leaflet/vue-leaflet': '@vue-leaflet/vue-leaflet' // 🔥 Ensure Vite resolves this path
+      }
+    },
+    optimizeDeps: {
+      include: ['@vue-leaflet/vue-leaflet'] // 🔥 Force Vite to pre-bundle it
+    }
   },
-});
+});  

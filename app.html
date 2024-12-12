@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Wildcard Approach (More Flexible) -->
+  <meta http-equiv="Content-Security-Policy" 
+        content="
+          default-src 'self'; 
+          img-src 'self' data: https://*.tile.openstreetmap.org;
+          connect-src 'self' https://*.tile.openstreetmap.org;
+          style-src 'self' 'unsafe-inline';
+        ">
+
+  <title>My Nuxt App</title>
+</head>
+<body>
+  {{ APP }}
+</body>
+</html>
