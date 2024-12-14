@@ -36,6 +36,8 @@ import mapboxgl from 'mapbox-gl'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
+const emit = defineEmits(['location-selected']) // Emitir evento de selección de ubicación
+
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiY29zaW9iaXQiLCJhIjoiY200Z2J3dm93MWh5bDJpcHo5cGtuNm82ZSJ9.d_Lwbr3pakpNua99XFK33g'
 
 const map = ref(null)
@@ -53,13 +55,23 @@ const addMarker = ({ name, coordinates, description }) => {
     currentMarker.remove()
   }
 
-  currentMarker = new mapboxgl.Marker()
+  currentMarker = new mapboxgl.Marker({ draggable: true })
     .setLngLat(coordinates)
     .setPopup(
       new mapboxgl.Popup({ offset: 25 })
         .setHTML(`<h3>${name}</h3><p>${description}</p>`) 
     )
     .addTo(map.value)
+
+  currentMarker.on('dragend', () => {
+    const newCoordinates = currentMarker.getLngLat()
+    emit('location-selected', {
+      place_name: name,
+      lat: newCoordinates.lat,
+      lon: newCoordinates.lng,
+      coordinates: [newCoordinates.lng, newCoordinates.lat]
+    })
+  })
 }
 
 const fetchSuggestions = async () => {
@@ -87,7 +99,13 @@ const fetchSuggestions = async () => {
 
 const selectSuggestion = (suggestion) => {
   const [lon, lat] = suggestion.geometry.coordinates
-  locationQuery.value = suggestion.place_name
+  
+  emit('location-selected', {
+    place_name: suggestion.place_name,
+    lat,
+    lon,
+    coordinates: suggestion.geometry.coordinates
+  })
 
   map.value.flyTo({
     center: [lon, lat],

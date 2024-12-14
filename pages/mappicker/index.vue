@@ -3,6 +3,22 @@
     <MapOneLocation ref="mapComponent" />
     <button @click="addCustomMarker">Add Custom Marker</button>
     <button @click="clearCurrentMarker">Clear Current Marker</button>
+    <v-dialog v-model="dialogDireccion" max-width="600px">
+  <v-card>
+    <v-card-title>
+      <span class="headline">Seleccionar Dirección</span>
+    </v-card-title>
+    <v-card-text>
+      <MapOneLocation ref="addressPickerMap" />
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="red darken-1" text @click="dialogDireccion = false">Cancelar</v-btn>
+      <v-btn color="green darken-1" text @click="confirmAddressSelection">Confirmar</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
+
   </div>
 </template>
 

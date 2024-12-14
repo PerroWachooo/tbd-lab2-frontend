@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     },
   ],
   css: [
-    'leaflet/dist/leaflet.css',
     "~/assets/css/global.css" 
   ],
   googleFonts: {
@@ -33,7 +32,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-10-23",
   build: {
-    transpile: ["vuetify", "@vue-leaflet/vue-leaflet"] 
+    transpile: ["vuetify"] 
   },
   vite: {
     vue: {
