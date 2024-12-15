@@ -2,7 +2,7 @@
   <Header />
 
   <div class="background">
-    <h1 class="lexend-deca-title">ALMACENES</h1>
+    <h1 class="lexend-deca-title">ALMACENES </h1>
 
     <div class="boton-almacenes">
       <v-btn color="#e29818ff" size="small" variant="tonal" class="boton-chico" @click="irAAñadir">
@@ -90,9 +90,10 @@
       <v-dialog v-model="dialogVerOrdenes" max-width="500px">
         <v-card>
           <v-card-title>
-            <span class="headline">{{almacenACalcular.nombre}}</span>
+            <span class="headline">Ordenes a 10KM</span>
           </v-card-title>
           <v-card-text>
+            {{ almacenACalcular.nombre }}
             
             <MapOneLocation @location-selected="updateposicionFromMap" />
           </v-card-text>
