@@ -1,6 +1,7 @@
 // services/clienteService.ts
 import { useNuxtApp } from "#app";
 import type { Cliente } from "@/models/cliente";
+import type { Almacen } from "@/models/almacen";
 
 export const useClienteService = () => {
     const { $axiosService } = useNuxtApp();
@@ -62,11 +63,21 @@ export const useClienteService = () => {
         await $axiosService.delete(`/api/clientes/${id}`);
     };
 
+    const cercanoCliente = async(id: number): Promise<Almacen> => {
+        try {
+            const { data } = await $axiosService.get<Almacen>(`/api/clientes/${id}/almacen-mas-cercano`);
+            return data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }    
     return {
         createCliente,
         getClienteById,
         getAllClientes,
         updateCliente,
-        deleteCliente
+        deleteCliente,
+        cercanoCliente
     };
 };

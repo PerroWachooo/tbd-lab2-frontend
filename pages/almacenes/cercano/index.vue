@@ -5,10 +5,9 @@
     <h1 class="lexend-deca-title">ALMACENES MÁS CERCANOS</h1>
 
     <div class="boton-clientes">
-
-      <v-menu offset-y>
+      <v-menu>
         <template #activator="{ props }">
-          <v-btn v-bind="props" color="var(--primary-a20)" class="boton-chico">
+          <v-btn v-bind="props" color="var(--primary-a20)" class="boton-chico" variant="tonal">
             Lista de clientes
           </v-btn>
         </template>
@@ -24,19 +23,48 @@
       </v-menu>
     </div>
 
-    <div v-if="focusedClient" class="cliente-detalle">
-      <h2>Detalles del Cliente</h2>
-      <p><strong>Nombre:</strong> {{ focusedClient.nombre }}</p>
-      <p><strong>Dirección:</strong> {{ focusedClient.direccion }}</p>
-      <p><strong>Email:</strong> {{ focusedClient.email }}</p>
-      <p><strong>Teléfono:</strong> {{ focusedClient.telefono }}</p>
-    </div>
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-card v-if="focusedClient" title="Detalles del cliente" variant="tonal" color="var(--primary-a0)">
+            <v-card-text>
+              <p><strong>Nombre:</strong> {{ focusedClient.nombre }}</p>
+              <p><strong>Dirección:</strong> {{ focusedClient.direccion }}</p>
+              <p><strong>Email:</strong> {{ focusedClient.email }}</p>
+              <p><strong>Teléfono:</strong> {{ focusedClient.telefono }}</p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card v-if="almacen.nombre" title="Almacén más cercano" variant="tonal" color="var(--primary-a0)">
+            <v-card-text>
+              <p><strong>Nombre:</strong> {{ almacen.nombre }}</p>
+              <p><strong>Posición:</strong> {{ almacen.posicion }}</p>
+              <p><strong>Longitud:</strong> {{ almacen.longitud }}</p>
+              <p><strong>Latitud:</strong> {{ almacen.latitud }}</p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <v-container>
+      <v-card  variant="tonal" color="var(--primary-a0)"> 
+        <v-card-title class="d-flex ">Mapa</v-card-title>
+        <v-card-text>
+          <div class="map-container">
+            <MapSelect ref="mapComponent" :clients="clientes" :focusedClient="focusedClient" />
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
 <script>
 import { useRouter } from "vue-router";
 import { useClienteService } from "~/services/clienteService";
+import { useAlmacenService } from "~/services/almacenService";
 import Header from "@/components/Header.vue";
 
 export default {
@@ -46,6 +74,7 @@ export default {
     return {
       newCliente: { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" },
       clienteAEditar: { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" },
+      almacen:{ nombre: 'AAAA', posicion: 'AAA', longitud: 'AAA', latitud: 'AAA'},
       clientes: [],
       loading: true,
       focusedClient: null,
@@ -85,6 +114,14 @@ export default {
     },
     toggleClientFocus(cliente) {
       this.focusedClient = this.focusedClient?.id_cliente === cliente.id_cliente ? null : cliente;
+      this.fetchAlmacenMasCercano(cliente.id_cliente);
+    },
+    async fetchAlmacenMasCercano(id_cliente) {
+      try {
+        this.almacen = almacen;
+      } catch (error) {
+        console.error('Error al obtener el almacén más cercano:', error);
+      }
     },
     irAAñadir() {
       this.dialogCrear = true;
@@ -93,6 +130,31 @@ export default {
 };
 </script>
 <style scoped>
+.background {
+  background-color: #282828;
+  min-height: 100vh;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+header h1 {
+  margin-left: 20px;
+  margin-top: 20px;
+  font-size: 2.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.lexend-deca-title {
+  font-family: "Lexend Deca", sans-serif;
+  font-optical-sizing: auto;
+  color: var(--primary-a0);
+  font-weight: 700;
+  font-size: 4.25rem;
+  font-style: normal;
+}
 .background {
   padding: 20px;
 }
@@ -106,7 +168,7 @@ export default {
 }
 
 .boton-chico {
-  width: 150px;
+  width: 300px;
 }
 
 .map-container {
