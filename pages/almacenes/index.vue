@@ -3,10 +3,11 @@
   <Header />
 
   <div class="background">
+    <br><br><br><br>
     <h1 class="lexend-deca-title">Almacenes</h1>
 
  <!-- Espacio -->
-    <br><br><br><br>
+    <br><br><br><br><br><br><br><br>
 
     <v-container>
       <v-row>
