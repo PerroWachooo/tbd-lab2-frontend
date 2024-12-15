@@ -13,6 +13,7 @@
           <li><a href="/clientes/ordenes">Ordenes</a></li>
           <li><a href="/clientes">Clientes</a></li>
           <li><a href="/informes">Informes</a></li>
+          <li><a href="/almacenes">Almacenes</a></li>
         </ul>
       </nav>
     </div>
