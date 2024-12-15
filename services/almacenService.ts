@@ -1,5 +1,6 @@
 import { useNuxtApp } from "#app";
 import type { Almacen } from "@/models/almacen";
+import type { Orden } from "@/models/orden";
 
 
 export const useAlmacenService = () => {
@@ -49,11 +50,21 @@ export const useAlmacenService = () => {
         });
     };
 
+    const obtenerOrdenesCercanas = async (idAlmacen: number, radioKm: number, token: string): Promise<Orden[]> => {
+        const { data } = await $axiosService.get<Orden[]>(`/api/almacen/ordenes-cercanas/${idAlmacen}/${radioKm}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return data;
+    };
+
     return {
         obtenerAlmacenes,
         obtenerAlmacen,
         crearAlmacen,
         actualizarAlmacen,
-        eliminarAlmacen
+        eliminarAlmacen,
+        obtenerOrdenesCercanas
     };
 }

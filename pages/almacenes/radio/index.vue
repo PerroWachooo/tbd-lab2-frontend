@@ -25,14 +25,15 @@
               <p>{{ almacen.latitud }}</p>
             </v-card-text>
             <v-card-actions>
-              <v-btn icon @click="toggleWarehouseFocus(almacen)">
-                <v-icon>{{ isSelected(almacen) ? 'mdi-checkbox-marked-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon>
-              </v-btn>
+              
               <v-btn icon @click="editarAlmacen(almacen)">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
               <v-btn icon @click="deleteAlmacen(almacen.id_almacen)">
                 <v-icon>mdi-delete</v-icon>
+              </v-btn>
+              <v-btn icon @click="calcularAlmacen(almacen)">
+                <v-icon>mdi-map-marker-radius</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -48,7 +49,7 @@
           <v-card-text>
             <v-form ref="formEditar">
               <v-text-field label="Nombre" v-model="almacenAEditar.nombre"></v-text-field>
-              <v-text-field label="Dirección" v-model="almacenAEditar.posicion"></v-text-field>
+              <v-text-field label="Posicion" v-model="almacenAEditar.posicion"></v-text-field>
               <v-text-field label="Longitud" v-model="almacenAEditar.longitud"></v-text-field>
               <v-text-field label="Latitud" v-model="almacenAEditar.latitud"></v-text-field>
             </v-form>
@@ -84,6 +85,24 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Diálogo RF -->
+      <v-dialog v-model="dialogVerOrdenes" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">{{almacenACalcular.nombre}}</span>
+          </v-card-title>
+          <v-card-text>
+            
+            <MapOneLocation @location-selected="updateposicionFromMap" />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" text @click="dialogCrear = false">Cancelar</v-btn>
+            <v-btn color="green darken-1" text @click="guardarCreacion">Crear</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -102,11 +121,13 @@ export default {
     return {
       newAlmacen: { nombre: '', posicion: '', longitud: '', latitud: '' },
       almacenAEditar: { nombre: '', posicion: '', longitud: '', latitud: '' },
+      almacenACalcular: { nombre: '', posicion: '', longitud: '', latitud: '' },
       almacenes: [],
       loading: true,
       focusedWarehouse: null,
       dialogEditar: false,
-      dialogCrear: false
+      dialogCrear: false,
+      dialogVerOrdenes: false
     };
   },
   mounted() {
@@ -116,24 +137,22 @@ export default {
     async fetchAlmacenes() {
       this.loading = true;
       try {
-        const { getAllAlmacenes } = useAlmacenService();
-        this.almacenes = await getAllAlmacenes();
+        const { obtenerAlmacenes } = useAlmacenService();
+        this.almacenes = await obtenerAlmacenes();
       } catch (error) {
         console.error('Error al obtener los almacenes:', error);
       } finally {
         this.loading = false;
       }
     },
-    updateposicionFromMap(location) {
-      if (this.dialogCrear) {
-        this.newAlmacen.posicion = location.place_name || location.address;
-      } else if (this.dialogEditar) {
-        this.almacenAEditar.posicion = location.place_name || location.address;
-      }
-    },
+    
     editarAlmacen(almacen) {
       this.almacenAEditar = { ...almacen };
       this.dialogEditar = true;
+    },
+    calcularAlmacen(almacen) {
+      this.almacenACalcular = { ...almacen };
+      this.dialogVerOrdenes = true;
     },
     async guardarEdicion() {
       if (!this.almacenAEditar.nombre || !this.almacenAEditar.posicion) {
@@ -141,8 +160,8 @@ export default {
         return;
       }
       try {
-        const { updateAlmacen } = useAlmacenService();
-        await updateAlmacen(this.almacenAEditar);
+        const { actualizarAlmacen } = useAlmacenService();
+        await actualizarAlmacen(this.almacenAEditar);
         this.fetchAlmacenes();
       } catch (error) {
         console.error('Error al actualizar el almacén:', error);
@@ -157,8 +176,8 @@ export default {
         return;
       }
       try {
-        const { createAlmacen } = useAlmacenService();
-        await createAlmacen(this.newAlmacen);
+        const { crearAlmacen } = useAlmacenService();
+        await crearAlmacen(this.newAlmacen);
         this.fetchAlmacenes();
       } catch (error) {
         console.error('Error al crear el almacén:', error);
@@ -172,18 +191,13 @@ export default {
       if (!isConfirmed) return;
       try {
         const almacenService = useAlmacenService();
-        await almacenService.deleteAlmacen(id_almacen);
+        await almacenService.eliminarAlmacen(id_almacen);
         this.almacenes = this.almacenes.filter(almacen => almacen.id_almacen !== id_almacen);
       } catch (error) {
         console.error('Error al eliminar el almacén:', error);
       }
     },
-    toggleWarehouseFocus(almacen) {
-      this.focusedWarehouse = this.focusedWarehouse?.id_almacen === almacen.id_almacen ? null : almacen;
-    },
-    isSelected(almacen) {
-      return this.focusedWarehouse && this.focusedWarehouse.id_almacen === almacen.id_almacen;
-    },
+    
     irAAñadir() {
       this.dialogCrear = true;
     }
