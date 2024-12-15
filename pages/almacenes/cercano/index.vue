@@ -64,7 +64,7 @@
 <script>
 import { useRouter } from "vue-router";
 import { useClienteService } from "~/services/clienteService";
-import { useAlmacenService } from "~/services/almacenService";
+
 import Header from "@/components/Header.vue";
 
 export default {
@@ -74,7 +74,7 @@ export default {
     return {
       newCliente: { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" },
       clienteAEditar: { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" },
-      almacen:{ nombre: 'AAAA', posicion: 'AAA', longitud: 'AAA', latitud: 'AAA'},
+      almacen:{ nombre: '', posicion: '', longitud: '', latitud: ''},
       clientes: [],
       loading: true,
       focusedClient: null,
@@ -84,6 +84,7 @@ export default {
   },
   mounted() {
     this.fetchClientes();
+    this.fetchAlmacenMasCercano();
   },
   methods: {
     async fetchClientes() {
@@ -91,6 +92,7 @@ export default {
       try {
         const { getAllClientes } = useClienteService();
         this.clientes = await getAllClientes();
+        console.log('Clientes obtenidos:', this.clientes);
       } catch (error) {
         console.error('Error al obtener los clientes:', error);
       } finally {
@@ -118,6 +120,8 @@ export default {
     },
     async fetchAlmacenMasCercano(id_cliente) {
       try {
+        const { cercanoCliente } = useClienteService();
+        const almacen = await cercanoCliente(id_cliente);
         this.almacen = almacen;
       } catch (error) {
         console.error('Error al obtener el almacén más cercano:', error);
