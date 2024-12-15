@@ -71,13 +71,25 @@ export const useClienteService = () => {
             console.error(error);
             throw error;
         }
-    }    
+    };
+
+    const obtenerDistanciaClienteAlmacen = async (idCliente: number, idAlmacen: number, token: string): Promise<number> => {
+        const { data } = await $axiosService.get<number>(`/api/clientes/distancia/${idCliente}/${idAlmacen}`,{
+        headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return data;
+    }; 
+        
+
     return {
         createCliente,
         getClienteById,
         getAllClientes,
         updateCliente,
         deleteCliente,
-        cercanoCliente
+        cercanoCliente,
+        obtenerDistanciaClienteAlmacen
     };
 };

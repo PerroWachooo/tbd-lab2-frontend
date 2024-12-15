@@ -21,6 +21,7 @@
       item-title="nombre"
       variant="outlined"
       v-model="clienteSelected"
+      return-object
     ></v-select>
     <br>
     Elegir almacen
@@ -31,6 +32,7 @@
       item-title="nombre"
       variant="outlined"
       v-model="almacenSelected"
+      return-object
     ></v-select>
 
     <v-card
@@ -82,14 +84,32 @@ export default {
       focusedClient: null,
       dialogEditar: false,
       dialogCrear: false,
-      ClienteSelected: null,
+      clienteSelected: null,
       almacenSelected: null,
-      distancia: 150,
+      distancia: null,
+      refreshToken: null,
+      id_usuario: null,
     };
   },
   mounted() {
+    // Obtener valores del localStorage al montar el componente
+    this.refreshToken = localStorage.getItem('refresh_token');
+    this.userId = parseInt(localStorage.getItem('id_usuario'), 10);
+
     this.fetchClientes();
     this.fetchAlmacenes();
+  },
+  watch: {
+    clienteSelected(newVal, oldVal) {
+      if (newVal && this.almacenSelected) {
+        this.obtenerDistanciaClienteAlmacen();
+      }
+    },
+    almacenSelected(newVal, oldVal) {
+      if (newVal && this.clienteSelected) {
+        this.obtenerDistanciaClienteAlmacen();
+      }
+    }
   },
   methods: {
     async fetchClientes() {
@@ -130,11 +150,21 @@ export default {
         console.error('Error al eliminar el cliente:', error);
       }
     },
-    toggleClientFocus(cliente) {
-      this.focusedClient = this.focusedClient?.id_cliente === cliente.id_cliente ? null : cliente;
-    },
     irAAñadir() {
       this.dialogCrear = true;
+    },
+    async obtenerDistanciaClienteAlmacen() {
+      try {
+        const { obtenerDistanciaClienteAlmacen } = useClienteService();
+        console.log(this.clienteSelected.id_cliente);
+        console.log(this.almacenSelected.id_almacen);
+
+        this.distancia = await obtenerDistanciaClienteAlmacen(this.clienteSelected.id_cliente, this.almacenSelected.id_almacen, this.refreshToken);
+
+      } catch (error) {
+        console.error('Error al calcular la distancia:', error);
+        
+      }
     }
   }
 };
