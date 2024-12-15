@@ -49,7 +49,7 @@
         Distanca de Ruta Corta:
         <br><br><br>
       </v-card-title>
-      <div class="text-purple-darken-3 text-h3 font-weight-bold d-flex justify-center">{{ distancia }}</div>
+      <div class="text-purple-darken-3 text-h3 font-weight-bold d-flex justify-center">{{ distancia }} Metros</div>
   
     </v-card>
 
@@ -160,6 +160,7 @@ export default {
         console.log(this.almacenSelected.id_almacen);
 
         this.distancia = await obtenerDistanciaClienteAlmacen(this.clienteSelected.id_cliente, this.almacenSelected.id_almacen, this.refreshToken);
+        this.distancia = this.distancia.toFixed(3)*1000 ;
 
       } catch (error) {
         console.error('Error al calcular la distancia:', error);
