@@ -109,8 +109,8 @@ export default {
   components: { Header, MapSelect, MapOneLocation },
   data() {
     return {
-      newCliente: { nombre: '', direccion: '', email: '', telefono: '' },
-      clienteAEditar: { nombre: '', direccion: '', email: '', telefono: '' },
+      newCliente: { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" },
+      clienteAEditar: { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" },
       clientes: [],
       loading: true,
       focusedClient: null,
@@ -144,21 +144,37 @@ export default {
       this.clienteAEditar = { ...cliente };
       this.dialogEditar = true;
     },
-    guardarEdicion() {
+    async guardarEdicion() {
       if (!this.clienteAEditar.nombre || !this.clienteAEditar.direccion) {
         alert('El nombre y la dirección son obligatorios');
         return;
       }
-      this.dialogEditar = false;
-      this.clienteAEditar = { nombre: '', direccion: '', email: '', telefono: '' };
+      try {
+        const { updateCliente } = useClienteService();
+        await updateCliente(this.clienteAEditar);
+        this.fetchClientes();
+      } catch (error) {
+        console.error('Error al actualizar el cliente:', error);
+      } finally {
+        this.dialogEditar = false;
+        this.clienteAEditar = { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" };
+      }
     },
-    guardarCreacion() {
+    async guardarCreacion() {
       if (!this.newCliente.nombre || !this.newCliente.direccion) {
         alert('El nombre y la dirección son obligatorios');
         return;
       }
-      this.dialogCrear = false;
-      this.newCliente = { nombre: '', direccion: '', email: '', telefono: '' };
+      try {
+        const { createCliente } = useClienteService();
+        await createCliente(this.newCliente);
+        this.fetchClientes();
+      } catch (error) {
+        console.error('Error al crear el cliente:', error);
+      } finally {
+        this.dialogCrear = false;
+        this.newCliente = { nombre: '', direccion: '', email: '', telefono: '', posicion: "0.0", longitud:"0.0", latitud:"0.0" };
+      }
     },
     async deleteCliente(id_cliente) {
       const isConfirmed = window.confirm("¿Estás seguro de eliminar el cliente?");
