@@ -1,13 +1,5 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "date": "2024-12-14T17:37:37.033Z",
-=======
-  "date": "2024-12-15T04:21:18.329Z",
->>>>>>> origin/main
-=======
-  "date": "2024-12-15T13:28:13.802Z",
->>>>>>> basti
+  "date": "2024-12-15T23:28:52.503Z",
   "preset": "nitro-dev",
   "framework": {
     "name": "nuxt",
@@ -17,21 +9,9 @@
     "nitro": "2.10.4"
   },
   "dev": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "pid": 24160,
+    "pid": 27164,
     "workerAddress": {
-      "socketPath": "\\\\.\\pipe\\nitro\\worker-24160-2.sock"
-=======
-    "pid": 7368,
-    "workerAddress": {
-      "socketPath": "\\\\.\\pipe\\nitro\\worker-7368-2.sock"
->>>>>>> origin/main
-=======
-    "pid": 22384,
-    "workerAddress": {
-      "socketPath": "\\\\.\\pipe\\nitro\\worker-22384-2.sock"
->>>>>>> basti
+      "socketPath": "\\\\.\\pipe\\nitro\\worker-27164-2.sock"
     }
   }
 }
