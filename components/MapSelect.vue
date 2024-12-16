@@ -2,12 +2,7 @@
     <div class="map-page">
       <!-- Client Dropdown Toggle -->
       <div class="search-container">
-        <label for="client-select" class="search-label">Select Client</label>
         <select id="client-select" v-model="selectedClientId" @change="focusOnClient" class="search-dropdown">
-          <option value="" disabled selected>Select a client</option>
-          <option v-for="client in clients" :key="client.id_cliente" :value="client.id_cliente">
-            {{ client.nombre }}
-          </option>
         </select>
       </div>
   
@@ -110,7 +105,7 @@
     map.value = new mapboxgl.Map({
       container: mapContainer.value,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-74.006, 40.7128],
+      center: [-70.64827	,-33.45694	],
       zoom: 12
     })
   
