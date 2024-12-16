@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "C:/Users/BastiánBritoGarrido/Desktop/tbd-lab2-frontend/node_modules/nuxt/dist/app/entry.js": {
+  "/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "C:/Users/BastiánBritoGarrido/Desktop/tbd-lab2-frontend/node_modules/nuxt/dist/app/entry.js"
+    "file": "/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/nuxt/dist/app/entry.js"
   }
 }
