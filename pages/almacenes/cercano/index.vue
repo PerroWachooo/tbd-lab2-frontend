@@ -127,6 +127,10 @@ export default {
         const almacenMasCercano = await cercanoCliente(this.clienteSelected.id_cliente);
         this.almacenSelected = almacenMasCercano;
         console.log('🏠 Almacén más cercano seleccionado:', almacenMasCercano);
+        // seleccionar del toggle de almacen el obtenido como almacen más cercano (simulando la eleccion del v-select)
+        
+
+
       } catch (error) {
         console.error('❌ Error al seleccionar el almacén más cercano:', error);
       }
