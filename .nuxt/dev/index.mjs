@@ -1,36 +1,36 @@
-import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { mkdirSync } from 'node:fs';
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, getQuery as getQuery$1, readBody, handleCors, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, getResponseStatusText } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
+import { mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path, { join } from 'node:path';
 import { parentPort, threadId } from 'node:worker_threads';
-import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, getQuery as getQuery$1, readBody, handleCors, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, getResponseStatusText } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/h3/dist/index.mjs';
-import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { stringify, uneval } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/devalue/index.js';
-import destr from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/destr/dist/index.mjs';
-import { withQuery, joinURL, withTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/vue/server-renderer/index.mjs';
-import { propsToString, renderSSRHead } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/@unhead/ssr/dist/index.mjs';
-import { createServerHead as createServerHead$1, CapoPlugin } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/unhead/dist/index.mjs';
-import { klona } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/scule/dist/index.mjs';
-import { createHooks } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/hookable/dist/index.mjs';
-import { createFetch as createFetch$1, Headers as Headers$1 } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/ofetch/dist/node.mjs';
-import { createCall, createFetch } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/unenv/runtime/fetch/index.mjs';
+import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { stringify, uneval } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/devalue/index.js';
+import destr from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/destr/dist/index.mjs';
+import { withQuery, joinURL, withTrailingSlash, parseURL, withoutBase, getQuery, joinRelativeURL } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/vue/server-renderer/index.mjs';
+import { propsToString, renderSSRHead } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/@unhead/ssr/dist/index.mjs';
+import { createHooks } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/hookable/dist/index.mjs';
+import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/ofetch/dist/node.mjs';
+import { createCall, createFetch } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/unenv/runtime/fetch/index.mjs';
+import { klona } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/scule/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/unstorage/drivers/fs.mjs';
+import { toRouteMatcher, createRouter } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/radix3/dist/index.mjs';
+import { getContext } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/unctx/dist/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { consola } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/consola/dist/index.mjs';
-import { getContext } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/errx/dist/index.js';
-import { isVNode, version, unref } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/vue/index.mjs';
+import { consola } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/consola/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/errx/dist/index.js';
+import { isVNode, version, unref } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/vue/index.mjs';
 import crypto from 'node:crypto';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/radix3/dist/index.mjs';
-import cache from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/memory-cache/index.js';
+import cache from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/memory-cache/index.js';
 import { performance } from 'perf_hooks';
-import { FilterXSS } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/xss/lib/index.js';
-import { hash } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/ohash/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/unstorage/drivers/fs.mjs';
-import { defineHeadPlugin } from 'file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/node_modules/@unhead/shared/dist/index.mjs';
+import { FilterXSS } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/xss/lib/index.js';
+import { hash } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/ohash/dist/index.mjs';
+import { createServerHead as createServerHead$1, CapoPlugin } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/unhead/dist/index.mjs';
+import { defineHeadPlugin } from 'file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/@unhead/shared/dist/index.mjs';
 
 function hasReqHeader(event, name, includes) {
   const value = getRequestHeader(event, name);
@@ -176,13 +176,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _pCgaOakZIM = (function(nitro) {
+const _dIFtd07GiU = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend";
+const rootDir = "/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
 
@@ -201,7 +201,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _DE78Kiu7TP = (nitroApp) => {
+const _WWoonNp508 = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -270,7 +270,7 @@ function onConsoleLog(callback) {
   consola.wrapConsole();
 }
 
-const _neGffjbgAP = (function(nitro) {
+const _xnS0MGfgCU = (function(nitro) {
   nitro.hooks.hook("render:response", (response) => {
     if (response.headers["x-powered-by"]) {
       delete response.headers["x-powered-by"];
@@ -557,7 +557,7 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/server/assets"}];
 
 const assets = createStorage();
 
@@ -569,11 +569,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\trevh\\OneDrive\\Escritorio\\lab2_tbd\\tbd-lab2-frontend","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\trevh\\OneDrive\\Escritorio\\lab2_tbd\\tbd-lab2-frontend\\server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\trevh\\OneDrive\\Escritorio\\lab2_tbd\\tbd-lab2-frontend\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\trevh\\OneDrive\\Escritorio\\lab2_tbd\\tbd-lab2-frontend\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\trevh\\OneDrive\\Escritorio\\lab2_tbd\\tbd-lab2-frontend\\.data\\kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/server","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/.nuxt/cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -1010,6 +1010,11 @@ function getRouteRulesForPath(path) {
   return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
 }
 
+getContext("nitro-app", {
+  asyncContext: false,
+  AsyncLocalStorage: void 0
+});
+
 const r=Object.create(null),i=e=>globalThis.process?.env||globalThis._importMeta_.env||globalThis.Deno?.env.toObject()||globalThis.__env__||(e?r:globalThis),s=new Proxy(r,{get(e,o){return i()[o]??r[o]},has(e,o){const E=i();return o in E||o in r},set(e,o,E){const b=i(!0);return b[o]=E,!0},deleteProperty(e,o){if(!o)return !1;const E=i(!0);return delete E[o],!0},ownKeys(){const e=i(!0);return Object.keys(e)}}),t=typeof process<"u"&&process.env&&"development"||"",B=[["APPVEYOR"],["AWS_AMPLIFY","AWS_APP_ID",{ci:!0}],["AZURE_PIPELINES","SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"],["AZURE_STATIC","INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN"],["APPCIRCLE","AC_APPCIRCLE"],["BAMBOO","bamboo_planKey"],["BITBUCKET","BITBUCKET_COMMIT"],["BITRISE","BITRISE_IO"],["BUDDY","BUDDY_WORKSPACE_ID"],["BUILDKITE"],["CIRCLE","CIRCLECI"],["CIRRUS","CIRRUS_CI"],["CLOUDFLARE_PAGES","CF_PAGES",{ci:!0}],["CODEBUILD","CODEBUILD_BUILD_ARN"],["CODEFRESH","CF_BUILD_ID"],["DRONE"],["DRONE","DRONE_BUILD_EVENT"],["DSARI"],["GITHUB_ACTIONS"],["GITLAB","GITLAB_CI"],["GITLAB","CI_MERGE_REQUEST_ID"],["GOCD","GO_PIPELINE_LABEL"],["LAYERCI"],["HUDSON","HUDSON_URL"],["JENKINS","JENKINS_URL"],["MAGNUM"],["NETLIFY"],["NETLIFY","NETLIFY_LOCAL",{ci:!1}],["NEVERCODE"],["RENDER"],["SAIL","SAILCI"],["SEMAPHORE"],["SCREWDRIVER"],["SHIPPABLE"],["SOLANO","TDDIUM"],["STRIDER"],["TEAMCITY","TEAMCITY_VERSION"],["TRAVIS"],["VERCEL","NOW_BUILDER"],["VERCEL","VERCEL",{ci:!1}],["VERCEL","VERCEL_ENV",{ci:!1}],["APPCENTER","APPCENTER_BUILD_ID"],["CODESANDBOX","CODESANDBOX_SSE",{ci:!1}],["STACKBLITZ"],["STORMKIT"],["CLEAVR"],["ZEABUR"],["CODESPHERE","CODESPHERE_APP_ID",{ci:!0}],["RAILWAY","RAILWAY_PROJECT_ID"],["RAILWAY","RAILWAY_SERVICE_ID"],["DENO-DEPLOY","DENO_DEPLOYMENT_ID"],["FIREBASE_APP_HOSTING","FIREBASE_APP_HOSTING",{ci:!0}]];function p(){if(globalThis.process?.env)for(const e of B){const o=e[1]||e[0];if(globalThis.process?.env[o])return {name:e[0].toLowerCase(),...e[2]}}return globalThis.process?.env?.SHELL==="/bin/jsh"&&globalThis.process?.versions?.webcontainer?{name:"stackblitz",ci:!1}:{name:"",ci:!1}}const l=p(),d=l.name;function n(e){return e?e!=="false":!1}const I=globalThis.process?.platform||"",T=n(s.CI)||l.ci!==!1,R=n(globalThis.process?.stdout&&globalThis.process?.stdout.isTTY);n(s.DEBUG);const A=t==="test"||n(s.TEST);n(s.MINIMAL)||T||A||!R;const _=/^win/i.test(I);!n(s.NO_COLOR)&&(n(s.FORCE_COLOR)||(R||_)&&s.TERM!=="dumb"||T);const C=(globalThis.process?.versions?.node||"").replace(/^v/,"")||null;Number(C?.split(".")[0])||null;const y=globalThis.process||Object.create(null),c={versions:{}};new Proxy(y,{get(e,o){if(o==="env")return s;if(o in e)return e[o];if(o in c)return c[o]}});const L=globalThis.process?.release?.name==="node",a=!!globalThis.Bun||!!globalThis.process?.versions?.bun,D=!!globalThis.Deno,O=!!globalThis.fastly,S=!!globalThis.Netlify,N=!!globalThis.EdgeRuntime,P=globalThis.navigator?.userAgent==="Cloudflare-Workers",F=[[S,"netlify"],[N,"edge-light"],[P,"workerd"],[O,"fastly"],[D,"deno"],[a,"bun"],[L,"node"]];function G(){const e=F.find(o=>o[0]);if(e)return {name:e[1]}}const u=G();u?.name||"";
 
 const scheduledTasks = false;
@@ -1061,7 +1066,7 @@ function publicAssetsURL(...path) {
   return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
 }
 
-const _6bpRtWQXCj = (function(nitro) {
+const _Eif0fJgKNc = (function(nitro) {
   nitro.hooks.hook("render:html", (html, { event }) => {
     const moduleOptions = useRuntimeConfig().security;
     if (!isContentSecurityPolicyEnabled(event)) {
@@ -1126,14 +1131,14 @@ const _6bpRtWQXCj = (function(nitro) {
 });
 
 const plugins = [
-  _pCgaOakZIM,
-_DE78Kiu7TP,
-_neGffjbgAP,
-_6bpRtWQXCj
+  _dIFtd07GiU,
+_WWoonNp508,
+_xnS0MGfgCU,
+_Eif0fJgKNc
 ];
 
 const FILE_UPLOAD_HEADER = "multipart/form-data";
-const _Mqt3EJ = defineEventHandler(async (event) => {
+const _5jLYLY = defineEventHandler(async (event) => {
   const routeRules = getRouteRules(event);
   if (routeRules.security.requestSizeLimiter !== false) {
     if (["POST", "PUT", "DELETE"].includes(event.node.req.method)) {
@@ -1415,7 +1420,7 @@ class RateLimiter {
     }
 }
 
-const _Ng1wim = defineEventHandler(async (event) => {
+const _ptuktb = defineEventHandler(async (event) => {
   const ip = getRequestHeader(event, "x-forwarded-for");
   const routeRules = getRouteRules(event);
   if (routeRules.security.rateLimiter !== false) {
@@ -1441,7 +1446,7 @@ const _Ng1wim = defineEventHandler(async (event) => {
   }
 });
 
-const _xZ9gj1 = defineEventHandler(async (event) => {
+const _svp26P = defineEventHandler(async (event) => {
   const routeRules = getRouteRules(event);
   const xssValidator = new FilterXSS(routeRules.security.xssValidator);
   if (event.node.req.socket.readyState !== "readOnly") {
@@ -1471,20 +1476,20 @@ const _xZ9gj1 = defineEventHandler(async (event) => {
   }
 });
 
-const _VMFHOU = defineEventHandler((event) => {
+const _hXOkYl = defineEventHandler((event) => {
   const routeRules = getRouteRules(event);
   handleCors(event, routeRules.security.corsHandler);
 });
 
-const _lazy_mXpA2p = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_WxTvvq = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_mXpA2p, lazy: true, middleware: false, method: undefined },
-  { route: '', handler: _Mqt3EJ, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _Ng1wim, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _xZ9gj1, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _VMFHOU, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_mXpA2p, lazy: true, middleware: false, method: undefined }
+  { route: '/__nuxt_error', handler: _lazy_WxTvvq, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _5jLYLY, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _ptuktb, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _svp26P, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _hXOkYl, lazy: false, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_WxTvvq, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -1749,8 +1754,8 @@ const renderSSRHeadOptions = {"omitLineBreaks":false};
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
-const getClientManifest = () => import('file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
-const getServerEntry = () => import('file://C:/Users/trevh/OneDrive/Escritorio/lab2_tbd/tbd-lab2-frontend/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();

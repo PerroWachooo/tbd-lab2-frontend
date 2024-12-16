@@ -35,6 +35,9 @@
               <v-btn icon @click="toggleWarehouseFocus(almacen)">
                 <v-icon>{{ isSelected(almacen) ? 'mdi-checkbox-marked-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon>
               </v-btn>
+              <v-btn icon @click="verOrdenesAlmacen(almacen)">
+                <v-icon>mdi-eye</v-icon>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -75,6 +78,7 @@
               <v-text-field label="Longitud" v-model="newAlmacen.lon" readonly></v-text-field>
               <v-text-field label="Latitud" v-model="newAlmacen.lat" readonly></v-text-field>
             </v-form>
+            <MapOneLocation @location-selected="updateposicionFromMap" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -82,6 +86,44 @@
             <v-btn color="green darken-1" text @click="guardarCreacion">Crear</v-btn>
           </v-card-actions>
         </v-card>
+      </v-dialog>
+
+      <!-- Diálogo RF -->
+      <v-dialog v-model="dialogVerOrdenes" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Ordenes a 10KM</span>
+          </v-card-title>
+          <v-card-text>
+            {{ almacenACalcular.nombre }}
+
+            <MapOneLocation @location-selected="updateposicionFromMap" />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1" text @click="dialogCrear = false">Cancelar</v-btn>
+            <v-btn color="green darken-1" text @click="guardarCreacion">Crear</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialogVerOrdenesList" max-width="500px">
+        <v-list>
+          <v-card-title>
+            <span class="headline">Ordenes a 10KM</span>
+          </v-card-title>
+          <v-card-text>
+            {{ almacenACalcular.nombre }}
+            <v-list-item v-for="orden in ordenes" :key="orden.id_orden">
+              <v-list-item-content>
+                <v-list-item-title>{{ orden.id_orden }}</v-list-item-title>
+                <v-list-item-subtitle>{{ orden.fecha_orden }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ orden.estado }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ orden.total | currency }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card-text>
+        </v-list>
       </v-dialog>
     </v-container>
   </div>
@@ -99,13 +141,17 @@ export default {
   components: { Header, MapSelectV2, MapOneLocationV2 },
   data() {
     return {
-      newAlmacen: { nombre: '', posicion: '', lon: '', lat: '' },
-      almacenAEditar: { nombre: '', posicion: '', lon: '', lat: '' },
+      newAlmacen: { nombre: '', posicion: '', longitud: '', latitud: '' },
+      almacenAEditar: { nombre: '', posicion: '', longitud: '', latitud: '' },
+      almacenACalcular: { nombre: '', posicion: '', longitud: '', latitud: '' },
+      ordenes: [],
       almacenes: [],
       loading: true,
       focusedWarehouse: null,
       dialogEditar: false,
-      dialogCrear: false
+      dialogCrear: false,
+      dialogVerOrdenes: false,
+      dialogVerOrdenesList: false,
     };
   },
   mounted() {
@@ -123,17 +169,32 @@ export default {
         this.loading = false;
       }
     },
-    updatePosicionFromMap(location) {
-      if (!location) return;
-      const { position, lat, lon } = location;
-      if (!position || !lat || !lon) return;
-      this.newAlmacen.posicion = position;
-      this.newAlmacen.lat = lat;
-      this.newAlmacen.lon = lon;
+
+    async obtenerOrdenes(idAlmacen, radioKm) {
+      this.loading = true;
+      try {
+        const { obtenerOrdenesCercanas } = useAlmacenService();
+        this.ordenes = await obtenerOrdenesCercanas(idAlmacen, radioKm);
+      } catch (error) {
+        console.error('Error al obtener las ordenes:', error);
+      } finally {
+        this.loading = false;
+      }
     },
+    
     editarAlmacen(almacen) {
       this.almacenAEditar = { ...almacen };
       this.dialogEditar = true;
+    },
+    calcularAlmacen(almacen) {
+      this.almacenACalcular = { ...almacen };
+      this.dialogVerOrdenes = true;
+    },
+    verOrdenesAlmacen(almacen) {
+      this.almacenACalcular = { ...almacen };
+      this.obtenerOrdenes(this.almacenACalcular.id_almacen, 10);
+      console.log(this.ordenes);
+      this.dialogVerOrdenesList = true;
     },
     async guardarEdicion() {
       try {
@@ -161,6 +222,13 @@ export default {
     },
     irAAñadir() {
       this.dialogCrear = true;
+    }
+  },
+  watch: {
+    dialogVerOrdenesList(val) {
+      if (!val) {
+        this.ordenes = []; // Limpiar la lista de órdenes cuando se cierre el diálogo
+      }
     }
   }
 };
