@@ -2,7 +2,7 @@
   <Header />
 
   <div class="background">
-    <h1 class="lexend-deca-title">ALMACENES </h1>
+    <h1 class="lexend-deca-title">ALMACENES</h1>
 
     <div class="boton-almacenes">
       <v-btn color="#e29818ff" size="small" variant="tonal" class="boton-chico" @click="irAAñadir">
@@ -10,6 +10,7 @@
       </v-btn>
     </div>
 
+    <MapSelectV2 ref="mapComponent" :items="almacenes" :focusedItem="focusedWarehouse" itemType="almacenes" />
 
     <v-container>
       <v-row>
@@ -25,15 +26,14 @@
               <p>{{ almacen.latitud }}</p>
             </v-card-text>
             <v-card-actions>
-              
               <v-btn icon @click="editarAlmacen(almacen)">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
               <v-btn icon @click="deleteAlmacen(almacen.id_almacen)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
-              <v-btn icon @click="calcularAlmacen(almacen)">
-                <v-icon>mdi-map-marker-radius</v-icon>
+              <v-btn icon @click="toggleWarehouseFocus(almacen)">
+                <v-icon>{{ isSelected(almacen) ? 'mdi-checkbox-marked-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon>
               </v-btn>
               <v-btn icon @click="verOrdenesAlmacen(almacen)">
                 <v-icon>mdi-eye</v-icon>
@@ -43,7 +43,6 @@
         </v-col>
       </v-row>
 
-      <!-- Diálogo de edición -->
       <v-dialog v-model="dialogEditar" max-width="500px">
         <v-card>
           <v-card-title>
@@ -52,11 +51,11 @@
           <v-card-text>
             <v-form ref="formEditar">
               <v-text-field label="Nombre" v-model="almacenAEditar.nombre"></v-text-field>
-              <v-text-field label="Posicion" v-model="almacenAEditar.posicion"></v-text-field>
-              <v-text-field label="Longitud" v-model="almacenAEditar.longitud"></v-text-field>
-              <v-text-field label="Latitud" v-model="almacenAEditar.latitud"></v-text-field>
+              <MapOneLocationV2 @location-selected="updatePosicionFromMap" />
+              <v-text-field label="Dirección" v-model="newAlmacen.posicion" readonly></v-text-field>
+              <v-text-field label="Longitud" v-model="newAlmacen.lon" readonly></v-text-field>
+              <v-text-field label="Latitud" v-model="newAlmacen.lat" readonly></v-text-field>
             </v-form>
-            <MapOneLocation @location-selected="updateposicionFromMap" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -65,8 +64,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <!-- Diálogo de creación -->
+      
       <v-dialog v-model="dialogCrear" max-width="500px">
         <v-card>
           <v-card-title>
@@ -75,9 +73,10 @@
           <v-card-text>
             <v-form ref="formCrear">
               <v-text-field label="Nombre" v-model="newAlmacen.nombre"></v-text-field>
-              <v-text-field label="Dirección" v-model="newAlmacen.posicion"></v-text-field>
-              <v-text-field label="Longitud" v-model="newAlmacen.longitud"></v-text-field>
-              <v-text-field label="Latitud" v-model="newAlmacen.latitud"></v-text-field>
+              <MapOneLocationV2 @location-selected="updatePosicionFromMap" />
+              <v-text-field label="Dirección" v-model="newAlmacen.posicion" readonly></v-text-field>
+              <v-text-field label="Longitud" v-model="newAlmacen.lon" readonly></v-text-field>
+              <v-text-field label="Latitud" v-model="newAlmacen.lat" readonly></v-text-field>
             </v-form>
             <MapOneLocation @location-selected="updateposicionFromMap" />
           </v-card-text>
@@ -134,12 +133,12 @@
 import { useRouter } from "vue-router";
 import { useAlmacenService } from "~/services/almacenService";
 import Header from "@/components/Header.vue";
-import MapSelect from "~/components/MapSelect.vue";
-import MapOneLocation from '~/components/MapOneLocation.vue';
+import MapSelectV2 from "~/components/MapSelectV2.vue";
+import MapOneLocationV2 from "~/components/MapOneLocationV2.vue";
 
 export default {
   name: "Almacenes",
-  components: { Header, MapSelect, MapOneLocation },
+  components: { Header, MapSelectV2, MapOneLocationV2 },
   data() {
     return {
       newAlmacen: { nombre: '', posicion: '', longitud: '', latitud: '' },
@@ -198,49 +197,29 @@ export default {
       this.dialogVerOrdenesList = true;
     },
     async guardarEdicion() {
-      if (!this.almacenAEditar.nombre || !this.almacenAEditar.posicion) {
-        alert('El nombre y la dirección son obligatorios');
-        return;
-      }
       try {
         const { actualizarAlmacen } = useAlmacenService();
         await actualizarAlmacen(this.almacenAEditar);
         this.fetchAlmacenes();
-      } catch (error) {
-        console.error('Error al actualizar el almacén:', error);
       } finally {
         this.dialogEditar = false;
-        this.almacenAEditar = { nombre: '', posicion: '', longitud: '', latitud: '' };
       }
     },
     async guardarCreacion() {
-      if (!this.newAlmacen.nombre || !this.newAlmacen.posicion) {
-        alert('El nombre y la dirección son obligatorios');
-        return;
-      }
       try {
         const { crearAlmacen } = useAlmacenService();
         await crearAlmacen(this.newAlmacen);
         this.fetchAlmacenes();
-      } catch (error) {
-        console.error('Error al crear el almacén:', error);
       } finally {
         this.dialogCrear = false;
-        this.newAlmacen = { nombre: '', posicion: '', longitud: '', latitud: '' };
       }
     },
-    async deleteAlmacen(id_almacen) {
-      const isConfirmed = window.confirm("¿Estás seguro de eliminar el almacén?");
-      if (!isConfirmed) return;
-      try {
-        const almacenService = useAlmacenService();
-        await almacenService.eliminarAlmacen(id_almacen);
-        this.almacenes = this.almacenes.filter(almacen => almacen.id_almacen !== id_almacen);
-      } catch (error) {
-        console.error('Error al eliminar el almacén:', error);
-      }
+    toggleWarehouseFocus(almacen) {
+      this.focusedWarehouse = this.focusedWarehouse?.id_almacen === almacen.id_almacen ? null : almacen;
     },
-    
+    isSelected(almacen) {
+      return this.focusedWarehouse && this.focusedWarehouse.id_almacen === almacen.id_almacen;
+    },
     irAAñadir() {
       this.dialogCrear = true;
     }
@@ -254,31 +233,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.background {
-  padding: 20px;
-}
-
-.lexend-deca-title {
-  font-family: 'Lexend Deca', sans-serif;
-}
-
-.boton-almacenes {
-  margin-bottom: 20px;
-}
-
-.boton-chico {
-  width: 150px;
-}
-
-.map-container {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-}
-
-.v-card {
-  margin-bottom: 20px;
-}
-</style>

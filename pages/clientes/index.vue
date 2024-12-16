@@ -49,11 +49,15 @@
           <v-card-text>
             <v-form ref="formEditar">
               <v-text-field label="Nombre" v-model="clienteAEditar.nombre"></v-text-field>
-              <v-text-field label="Dirección" v-model="clienteAEditar.direccion"></v-text-field>
               <v-text-field label="Email" v-model="clienteAEditar.email"></v-text-field>
               <v-text-field label="Teléfono" v-model="clienteAEditar.telefono"></v-text-field>
             </v-form>
             <MapOneLocation @location-selected="updateDireccionFromMap" />
+            <v-text-field 
+              label="Dirección" 
+              v-model="newCliente.direccion" 
+              readonly
+            ></v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -72,11 +76,15 @@
           <v-card-text>
             <v-form ref="formCrear">
               <v-text-field label="Nombre" v-model="newCliente.nombre"></v-text-field>
-              <v-text-field label="Dirección" v-model="newCliente.direccion"></v-text-field>
               <v-text-field label="Email" v-model="newCliente.email"></v-text-field>
               <v-text-field label="Teléfono" v-model="newCliente.telefono"></v-text-field>
             </v-form>
             <MapOneLocation @location-selected="updateDireccionFromMap" />
+            <v-text-field 
+              label="Dirección" 
+              v-model="newCliente.direccion" 
+              readonly
+            ></v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

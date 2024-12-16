@@ -10,7 +10,7 @@
           @keydown.down.prevent="moveDown"
           @keydown.up.prevent="moveUp"
           @keydown.enter.prevent="selectHighlightedSuggestion"
-          placeholder="Search for a location (e.g., New York, NY)"
+          placeholder="Busca tu dirección para añadila"
           class="search-input"
         />
         <ul v-if="suggestions.length" class="suggestions-dropdown">
