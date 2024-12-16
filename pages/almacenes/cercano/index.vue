@@ -13,7 +13,7 @@
       color="var(--primary-a20)"
       variant="tonal"
     >
-      <h3>Elegir Cliente</h3>
+    <h3>Elegir Cliente</h3>
       <v-select
         clearable
         label="Seleccionar"
@@ -23,18 +23,23 @@
         v-model="clienteSelected"
         return-object
       ></v-select>
-      <v-btn @click="selectClosestAlmacen" class="mt-2" color="primary">Seleccionar Almacén Más Cercano</v-btn>
+
+      <v-btn @click="selectClosestAlmacen" class="mt-2" color="primary">
+        Seleccionar Almacén Más Cercano
+      </v-btn>
 
       <h3>Elegir Almacén</h3>
       <v-select
+        ref="almacenSelect"
         clearable
-        label="Seleccionar"
+        label="Seleccionar Almacén"
         :items="almacenes"
         item-title="nombre"
         variant="outlined"
         v-model="almacenSelected"
         return-object
       ></v-select>
+
 
       <div class="map-page">
         <div v-if="!isMapLoaded" class="map-loading">Cargando mapa...</div>
@@ -117,24 +122,32 @@ export default {
       }
     },
     async selectClosestAlmacen() {
-      try {
-        if (!this.clienteSelected) {
-          console.warn('⚠️ No se ha seleccionado un cliente.');
-          return;
-        }
-        console.log('📡 Buscando almacén más cercano para el cliente...');
-        const { cercanoCliente } = useClienteService();
-        const almacenMasCercano = await cercanoCliente(this.clienteSelected.id_cliente);
-        this.almacenSelected = almacenMasCercano;
-        console.log('🏠 Almacén más cercano seleccionado:', almacenMasCercano);
-        // seleccionar del toggle de almacen el obtenido como almacen más cercano (simulando la eleccion del v-select)
-        
+  try {
+    if (!this.clienteSelected) {
+      console.warn('⚠️ No se ha seleccionado un cliente.');
+      return;
+    }
+    console.log('📡 Buscando almacén más cercano para el cliente...');
+    const { cercanoCliente } = useClienteService();
+    const almacenMasCercano = await cercanoCliente(this.clienteSelected.id_cliente);
+    
+    if (almacenMasCercano) {
+      this.almacenSelected = almacenMasCercano;
+      console.log('🏠 Almacén más cercano seleccionado:', almacenMasCercano);
 
+      // Simular la selección en el v-select
+      this.$nextTick(() => {
+        this.$refs.almacenSelect.internalValue = almacenMasCercano;
+      });
 
-      } catch (error) {
-        console.error('❌ Error al seleccionar el almacén más cercano:', error);
-      }
-    },
+    } else {
+      console.warn('⚠️ No se encontró ningún almacén cercano para el cliente.');
+    }
+  } catch (error) {
+    console.error('❌ Error al seleccionar el almacén más cercano:', error);
+  }
+},
+
     initMap() {
       mapboxgl.accessToken = 'pk.eyJ1IjoiY29zaW9iaXQiLCJhIjoiY200Z2J3dm93MWh5bDJpcHo5cGtuNm82ZSJ9.d_Lwbr3pakpNua99XFK33g';
       this.map = new mapboxgl.Map({
