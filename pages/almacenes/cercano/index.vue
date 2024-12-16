@@ -137,9 +137,11 @@ export default {
 
       // Simular la selección en el v-select
       this.$nextTick(() => {
-        this.$refs.almacenSelect.internalValue = almacenMasCercano;
+        if (this.$refs.almacenSelect) {
+          this.$refs.almacenSelect.internalValue = almacenMasCercano; // Selecciona el valor del v-select
+          this.$refs.almacenSelect.$emit('change', almacenMasCercano); // Dispara el evento de cambio
+        }
       });
-
     } else {
       console.warn('⚠️ No se encontró ningún almacén cercano para el cliente.');
     }
@@ -147,6 +149,7 @@ export default {
     console.error('❌ Error al seleccionar el almacén más cercano:', error);
   }
 },
+
 
     initMap() {
       mapboxgl.accessToken = 'pk.eyJ1IjoiY29zaW9iaXQiLCJhIjoiY200Z2J3dm93MWh5bDJpcHo5cGtuNm82ZSJ9.d_Lwbr3pakpNua99XFK33g';
