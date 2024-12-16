@@ -98,18 +98,22 @@ export default {
   },
   watch: {
     clienteSelected: async function (newCliente) {
-    console.log('📌 Cliente seleccionado:', newCliente);
-    if (newCliente && newCliente.direccion) {
-      const coordenadas = await this.geocodeAddress(newCliente.direccion);
-      this.clienteSelected.longitud = coordenadas.longitud;
-      this.clienteSelected.latitud = coordenadas.latitud;
+      console.log('📌 Cliente seleccionado:', newCliente);
+      if (newCliente && newCliente.direccion) {
+        const coordenadas = await this.geocodeAddress(newCliente.direccion);
+        this.clienteSelected.longitud = coordenadas.longitud;
+        this.clienteSelected.latitud = coordenadas.latitud;
+        this.updateMapMarkers();
+        await this.obtenerDistanciaClienteAlmacen(); // Ensure distance is calculated when almacen is selected
+
+      }
+    },
+    almacenSelected: async function () {
+      console.log('📌 Almacén seleccionado:', this.almacenSelected);
       this.updateMapMarkers();
-    }
-  },
-  almacenSelected: function () {
-    console.log('📌 Almacén seleccionado:', this.almacenSelected);
-    this.updateMapMarkers();
-  }
+      await this.obtenerDistanciaClienteAlmacen(); // Ensure distance is calculated when almacen is selected
+    },
+    
   },
   methods: {
     async fetchClientes() {
