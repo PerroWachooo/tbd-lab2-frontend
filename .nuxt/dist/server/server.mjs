@@ -1,1 +1,1 @@
-export { default } from "file:///C:/Users/Basti%C3%A1nBritoGarrido/Desktop/tbd-lab2-frontend/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"
+export { default } from "file:///home/seba/Documentos/TDA/lab2_tdb/tbd-lab2-frontend/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"
